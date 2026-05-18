@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  sac-runtime:
+    image: savonet/liquidsoap:v2.3.3
+
+    container_name: sac-runtime
+
+    restart: unless-stopped
+
+    working_dir: /app
+
+    volumes:
+      - /root/sac-runtime:/app
+      - /srv/libretime/imported:/srv/libretime/imported:ro
+
+    command: >
+      liquidsoap /app/liquidsoap/radio_sac.liq
+
+    ports:
+      - "1235:1235"
+
+    networks:
+      - libretime_default
+
+networks:
+  libretime_default:
+    external: true
